@@ -26,6 +26,7 @@
 - [Arquitectura General de la Aplicación](#arquitectura-general-de-la-aplicación)
 - [Modelo de Datos (Base de Datos)](#modelo-de-datos-base-de-datos)
 - [¿Qué Funcionalidades se Lograron Implementar por Completo?](#qué-funcionalidades-se-lograron-implementar-por-completo)
+- [Protocolo de Pruebas Realizadas](#protocolo-de-pruebas-realizadas)
 - [¿Qué Dificultades se Encontraron en el Proceso de Desarrollo?](#qué-dificultades-se-encontraron-en-el-proceso-de-desarrollo)
 - [¿Qué Mejoras Podrían Agregarse a la Aplicación?](#qué-mejoras-podrían-agregarse-a-la-aplicación)
 - [Referencias y Citas](#referencias-y-citas)
@@ -341,14 +342,14 @@ Los requerimientos no funcionales de Minors Oculus definen las cualidades del si
 | **Categoría** | **Requerimiento** | **Descripción** |
 |---------------|-------------------|-----------------|
 | **1. Seguridad y Privacidad** | Autenticación Robusta | El acceso a la plataforma debe estar protegido mediante Firebase Authentication, garantizando que solo el tutor autorizado pueda visualizar los datos del menor |
-| | Privacidad de Datos | La aplicación debe procesar las notificaciones en tiempo real y solo almacenar永久mente aquellas que representen un riesgo real, respetando la privacidad de las comunicaciones inofensivas |
+| | Privacidad de Datos | La aplicación debe procesar las notificaciones en tiempo real y solo almacenar permanentemente aquellas que representen un riesgo real, respetando la privacidad de las comunicaciones inofensivas |
 | | Integridad de la API | Todas las peticiones al motor de IA (TutelIQ) deben realizarse mediante protocolos seguros (HTTPS) y autenticación por Token (Bearer Token) para evitar la interceptación de datos sensibles |
 | **2. Rendimiento y Eficiencia** | Procesamiento Asíncrono | El escaneo de mensajes no debe bloquear la interfaz de usuario. Para ello, se utilizan Kotlin Coroutines y Flow, asegurando que el análisis ocurra en segundo plano sin afectar la fluidez del dispositivo |
 | | Bajo Consumo de Recursos | El servicio de escucha (NotificationListenerService) debe estar optimizado para tener un impacto mínimo en la batería y la memoria RAM del dispositivo del menor |
 | | Latencia de Respuesta | Las peticiones a la API de riesgo deben tener un tiempo de espera (timeout) controlado (15 segundos configurados en OkHttp) para garantizar una respuesta rápida o una gestión de error eficiente si no hay conexión |
 | **3. Disponibilidad y Persistencia** | Soporte Offline | Gracias a Room Database, la aplicación debe ser capaz de mostrar el historial de alertas y datos previamente capturados incluso si el dispositivo no tiene conexión a internet en ese momento |
 | | Sincronización en la Nube | El estado de protección y los datos del perfil deben estar disponibles y sincronizados mediante Firebase Realtime Database, permitiendo la recuperación de información en caso de cambio de dispositivo |
-| **4. Usability (Usabilidad)** | Diseño Intuitivo | La interfaz debe seguir las guías de Material Design 3, utilizando componentes visuales claros (como el sistema de semáforo de colores) para que padres sin conocimientos técnicos puedan interpretar los riesgos fácilmente |
+| **4. Usabilidad** | Diseño Intuitivo | La interfaz debe seguir las guías de Material Design 3, utilizando componentes visuales claros (como el sistema de semáforo de colores) para que padres sin conocimientos técnicos puedan interpretar los riesgos fácilmente |
 | | Accesibilidad | La aplicación debe ser compatible con diferentes tamaños de pantalla y densidades de píxeles mediante el uso de layouts adaptables (ConstraintLayout) |
 | **5. Compatibilidad** | Versatilidad de Android | La app debe ser compatible con dispositivos que utilicen desde Android 7.0 (API 24) hasta las versiones más recientes (API 35), cubriendo la gran mayoría de smartphones actuales en el mercado |
 | | Integración con Terceros | El sistema debe ser capaz de interceptar notificaciones de una amplia variedad de aplicaciones externas (WhatsApp, TikTok, Instagram, etc.) sin requerir modificaciones en dichas apps |
@@ -500,6 +501,33 @@ Basado en el análisis técnico del código fuente y los módulos desarrollados 
 | **6. Centro de Análisis Experto (TutelIQ AI Panel)** | **Análisis Manual:** Interfaz que permite al tutor seleccionar una notificación específica o ingresar texto manualmente para realizar un escaneo profundo enfocado en una dimensión de seguridad particular (ej. detectar específicamente "Ingeniería Social") |
 | **7. Seguridad y Permisos Avanzados** | • **Gestión de Permisos Críticos:** Flujo de usuario implementado para solicitar y verificar el acceso a notificaciones y contactos, esenciales para el funcionamiento del "guardián"<br>• **Autenticación:** Sistema de inicio de sesión y registro vinculado a Firebase para asegurar que solo el tutor tenga acceso al panel de control |
 | **8. Base de Conocimientos (Diccionario de Seguridad)** | **Módulo Educativo:** Implementación completa de una guía que define términos de ciberdelincuencia (ESCNNA, Grooming, Sexting), ayudando a los padres a comprender los riesgos detectados por la IA |
+
+---
+
+## Protocolo de Pruebas Realizadas
+
+Para asegurar la transparencia sobre el estado actual de Minors Oculus, se detalla el protocolo de pruebas realizado, enfocado exclusivamente en la conectividad y la funcionalidad de interceptación en tiempo real:
+
+### 1. Pruebas de Recepción de Notificaciones (En Vivo)
+
+| **Prueba** | **Descripción** | **Resultado** |
+|------------|-----------------|---------------|
+| **Captura de Mensajería** | Se confirmó mediante pruebas en vivo que el sistema recibe y detecta correctamente las notificaciones entrantes de aplicaciones externas (como WhatsApp e Instagram) | ✅ **Exitosa** |
+| **Funcionamiento del Servicio** | Se verificó que el servicio de escucha captura el contenido del mensaje y el remitente en el momento exacto de su llegada al dispositivo | ✅ **Exitosa** |
+
+### 2. Validación de la API Key
+
+| **Prueba** | **Descripción** | **Resultado** |
+|------------|-----------------|---------------|
+| **Comprobación de Conectividad** | Se validó que la API Key de TutelIQ está activa y operativa, permitiendo que la aplicación establezca conexión con el servidor de inteligencia artificial de manera exitosa | ✅ **Exitosa** |
+| **Recepción de Veredictos** | Se comprobó que la aplicación recibe la respuesta técnica de la IA tras procesar el texto enviado, permitiendo mostrar el resultado del análisis en la interfaz | ✅ **Exitosa** |
+
+### 3. Pruebas de Interfaz y Permisos
+
+| **Prueba** | **Descripción** | **Resultado** |
+|------------|-----------------|---------------|
+| **Visualización en Tiempo Real** | Se verificó que el veredicto de riesgo (Peligrosa, Sospechosa o Inofensiva) se muestra en la pantalla de la aplicación inmediatamente después de recibir la respuesta de la API | ✅ **Exitosa** |
+| **Activación de Permisos** | Se validó el flujo para guiar al usuario a los ajustes de Android y otorgar el permiso de "Acceso a Notificaciones", confirmando que la app detecta correctamente cuando este permiso ha sido concedido | ✅ **Exitosa** |
 
 ---
 
