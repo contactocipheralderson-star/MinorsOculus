@@ -629,7 +629,6 @@ La IA de TutelIQ cumple tres funciones vitales en Minors Oculus:
 |-------------|-----------------|
 | **1. Clasificación en Tiempo Real** | Analiza cada notificación entrante (WhatsApp, Messenger, etc.) y le asigna un Nivel de Riesgo (Verde: Inofensivo, Amarillo: Sospechoso, Rojo: Peligroso) |
 | **2. Categorización de Amenazas** | Identifica la naturaleza específica del peligro entre 15 dimensiones de análisis (ej. detectar si un mensaje es específicamente un intento de Ingeniería Social o Radicalización) |
-| **3. Análisis Experto Manual** | En la pantalla "TutelIQ AI Expert", permite al tutor realizar consultas profundas sobre textos específicos, proporcionando un veredicto detallado basado en su amplia base de conocimientos sobre ciberdelitos |
 
 > **En conclusión:** TutelIQ AI actúa como el "cerebro analítico" que transforma una simple lectura de mensajes en un sistema de defensa inteligente y proactivo.
 
