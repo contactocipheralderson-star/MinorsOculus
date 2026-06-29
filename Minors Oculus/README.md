@@ -1,4 +1,4 @@
-<img width="1983" height="793" alt="minors-oculus-git-wallpaper" src="https://github.com/user-attachments/assets/8ae7bc21-48c8-478b-9921-6e0e9f408e9e" />
+<img width="1983" height="793" alt="minors-oculus-git-wallpaper" src="https://github.com/user-attachments/assets/f00b8b0c-9c91-419e-9ec9-3026fcd42f10" />
 
 # 📱 MINORS OCULUS
 
@@ -31,6 +31,7 @@
 - [¿Qué Mejoras Podrían Agregarse a la Aplicación?](#qué-mejoras-podrían-agregarse-a-la-aplicación)
 - [Referencias y Citas](#referencias-y-citas)
 - [Modelo de IA](#modelo-de-ia)
+- [Comunicación App - TutelIQ: Proceso Técnico Detallado](#comunicación-app---tuteliq-proceso-técnico-detallado)
 
 ---
 
@@ -631,3 +632,38 @@ La IA de TutelIQ cumple tres funciones vitales en Minors Oculus:
 | **3. Análisis Experto Manual** | En la pantalla "TutelIQ AI Expert", permite al tutor realizar consultas profundas sobre textos específicos, proporcionando un veredicto detallado basado en su amplia base de conocimientos sobre ciberdelitos |
 
 > **En conclusión:** TutelIQ AI actúa como el "cerebro analítico" que transforma una simple lectura de mensajes en un sistema de defensa inteligente y proactivo.
+
+---
+
+## Comunicación App - TutelIQ: Proceso Técnico Detallado
+
+La Inteligencia Artificial de **TutelIQ** funciona como un motor de análisis de lenguaje natural (NLP) especializado en la detección de patrones de riesgo infantil. En lugar de buscar palabras clave aisladas, analiza el contexto, la intención y la semántica de las conversaciones para identificar peligros como el grooming o el acoso.
+
+### Proceso Técnico Detallado que Comprueba la Comunicación Real de la App con esta IA
+
+| **Paso** | **Acción** | **Descripción Técnica** |
+|----------|------------|-------------------------|
+| **1. Configuración del Túnel de Comunicación** | Punto de Acceso | La aplicación está programada para conectarse al servidor oficial en la dirección **https://api.tuteliq.com/** |
+| | Llave de Autorización | Para que el servidor de TutelIQ acepte los datos, la app envía una **API Key activa** (tq_test_A2R8sMWQ4tBp7GZFUmp2bRmjm5S552BI) en cada petición. Sin esta llave, la comunicación sería rechazada |
+| **2. Intercepción y Extracción (El Disparador)** | Captura del Mensaje | Cuando llega un mensaje al celular del menor (por ejemplo, desde WhatsApp), el servicio de la app llamado **NotificationMonitorService** detecta la notificación |
+| | Extracción de Datos | En ese instante, la app extrae el texto del mensaje (ejemplo: "No le cuentes a nadie que estamos hablando") y el remitente |
+| **3. El Envío de Datos (La Petición)** | Empaquetado | La app utiliza una herramienta llamada **Retrofit** para empaquetar ese texto en un objeto digital llamado **DetectionRequest** |
+| | Transmisión | Este paquete se envía mediante un método **POST** a la ruta **v1/detections** del servidor de TutelIQ. Es un proceso de red real que ocurre a través de internet |
+| **4. Procesamiento en la Nube de TutelIQ** | Evaluación de la IA | Una vez que el texto llega a los servidores de TutelIQ, su modelo de IA evalúa la peligrosidad en **15 dimensiones diferentes** (Ciberbullying, Ingeniería Social, Grooming, etc.) |
+| | Decisión de Riesgo | La IA decide un nivel de riesgo técnico: **critical, high, medium** o **low** |
+| **5. Respuesta y Traducción del Resultado** | Respuesta del Servidor | El servidor de TutelIQ envía de vuelta un archivo **JSON** con los resultados |
+| | Traducción al Usuario | La app recibe esta respuesta y la "traduce" instantáneamente para el usuario:<br>• Si la IA responde **critical** o **high**, la app asigna el nivel **PELIGROSA** (Rojo)<br>• Si responde **medium**, asigna **SOSPECHOSA** (Amarillo)<br>• Si es cualquier otro valor, asigna **INOFENSIVA** (Verde) |
+| **6. Evidencias Visuales de la Comunicación** | Logs de Sistema | Al revisar el registro de la app (Logcat), se puede observar el mensaje *"Analizando con TutelIQ AI..."*, lo que confirma que la petición de red se ha disparado |
+| | Veredicto en Pantalla | La velocidad con la que aparece el color del semáforo tras recibir el mensaje depende de la respuesta del servidor, lo que demuestra que la app está esperando un veredicto externo y no solo realizando una búsqueda interna |
+
+### Resumen del Flujo de Comunicación
+
+| **Etapa** | **Descripción** |
+|-----------|-----------------|
+| **1** | Captura del mensaje |
+| **2** | Envío cifrado a la API |
+| **3** | Análisis en el servidor de TutelIQ |
+| **4** | Recepción del veredicto |
+| **5** | Visualización del color de riesgo en la App |
+
+> **Conclusión:** La comunicación entre la aplicación y la inteligencia artificial de TutelIQ es **plenamente funcional y verídica**, sustentada por una integración técnica directa mediante el motor **RiskEngine**. El sistema realiza peticiones **HTTPS** seguras hacia los servidores oficiales de TutelIQ, utilizando una clave de acceso (API Key) activa y procesando las respuestas en tiempo real para transformar el análisis heurístico de la IA en veredictos visuales de riesgo. Esta conexión permite que cada mensaje interceptado sea evaluado por un modelo experto externo, garantizando que la protección no sea una simulación, sino un proceso de análisis digital auténtico y determinista.
