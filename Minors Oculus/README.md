@@ -1,3 +1,5 @@
+<img width="1983" height="793" alt="minors-oculus-git-wallpaper" src="https://github.com/user-attachments/assets/8ae7bc21-48c8-478b-9921-6e0e9f408e9e" />
+
 # 📱 MINORS OCULUS
 
 ## *Ciberseguridad Infantil Impulsada por IA*
